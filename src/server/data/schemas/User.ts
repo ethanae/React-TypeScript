@@ -1,5 +1,6 @@
 import { Document, Schema, Model, model, connect } from "mongoose";
 import { IUser } from "../../common/interfaces/IUser";
+require('dotenv').config();
 
 export interface UserEntity extends IUser, Document {}
 
@@ -12,5 +13,9 @@ export const UserSchema: Schema = new Schema({
   address: String
 });
 
-connect(process.env.DB_CONN_STRING);
+try {
+  connect(process.env.DB_CONN_STRING, { useNewUrlParser: true });
+} catch (error) {
+  console.log(error);
+}
 export const User: Model<UserEntity> = model<UserEntity>('User', UserSchema);

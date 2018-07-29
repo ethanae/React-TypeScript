@@ -181,7 +181,7 @@ const Formik = withFormik({
         resetForm();
       }
       else 
-        toast.error('We had trouble creating that user. Please try again!');
+        toast.error('We had trouble creating that user. It may already exist.');
       setSubmitting(false);
     })
     .catch(_ => toast.error('Oops something went wrong!'));

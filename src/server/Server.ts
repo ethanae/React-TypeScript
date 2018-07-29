@@ -1,7 +1,6 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as path from 'path';
-require('dotenv').config();
 
 import UserService from "./services/UserService";
 
@@ -18,7 +17,7 @@ class Server {
   private middleware(): void {
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: false }));
-    this.express.use('/', express.static(path.join(__dirname, '/../public')));
+    this.express.use('/', express.static(path.join(__dirname, '/../public/')));
   }
 
   private routes(): void {

@@ -7,8 +7,6 @@ import { UserCard } from "./UserCard";
 import { IUser } from "../interfaces/IUser";
 import { Button } from "./Button";
 import { ToastContainer, toast } from 'react-toastify';
-import { debounce } from "ts-debounce";
-import * as _ from "lodash";
 
 interface IAppState {
   user: IUser,
@@ -35,7 +33,7 @@ export class App extends React.Component<{}, IAppState>  {
   onSearchClick = () => {
     const { searchTerm } = this.state;
     if(searchTerm.length) {
-      fetch('/api/user/id/' + searchTerm, {
+      fetch(`/api/user/id/${searchTerm}`, {
         method: 'GET'
       })
       .then(res => {
@@ -61,7 +59,7 @@ export class App extends React.Component<{}, IAppState>  {
     return (
       <div>
         <UserCard user={this.state.user} />
-        <Button text='Close' className='btn btn-danger' onClick={e => this.dismissUserCard()}/>
+        <Button text='Back' className='btn btn-danger' onClick={e => this.dismissUserCard()} />
       </div>
     );
   }
@@ -69,7 +67,7 @@ export class App extends React.Component<{}, IAppState>  {
   render() {
     console.log(this.state.user);
     return (
-      <div className='container-fluid'>
+      <div className='container-fluid mb-5'>
         <ToastContainer />
         <div className='text-center p-5'>
           <h1 className='mb-5 border-bottom border-primary'>TypeScript and React User I/O</h1>

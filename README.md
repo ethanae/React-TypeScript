@@ -1,9 +1,9 @@
 # React & TypeScript User CRUD
 
-## React, TypeScript, MongoDB, Express
+## React, TypeScript, Mongoose, Express
 
 # Setup
-### Note: you need to include a .env file in your project root with a valid MongoDB connection string
+### Note: you need to include a .env file in your project root with a valid MongoDB connection string with the key `DB_CONN_STRING`
 `npm install`
 
 ### To run the web client
