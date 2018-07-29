@@ -1,0 +1,34 @@
+button {
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.b-primary {
+  color: #ffffff;
+  border: 1px solid #0582CA;
+  background-color: #0582CA;
+  padding: 10px;
+}
+
+.b-secondary {
+  color: #0582CA;
+  border: 1px solid #0582CA;
+  background-color: transparent;
+  padding: 10px;
+}
+
+.form-input {
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.form-input-error {
+  border: 1px solid #BF211E;
+}
+
+.form-error-text {
+  color: #BF211E;
+  font-size: 12px;
+  font-weight: bold;
+}
