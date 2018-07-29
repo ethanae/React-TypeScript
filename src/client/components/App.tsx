@@ -1,14 +1,19 @@
 import * as React from "react";
-import "tachyons";
-import "../styles/core.css";
+import "bootstrap/dist/css/bootstrap.css";
+import 'react-toastify/dist/ReactToastify.css';
 import { Input } from "./Input";
-import { Button } from "./Button";
 import { UserForm } from "./Forms/UserForm";
+import { UserCard } from "./UserCard";
+import { IUser } from "../interfaces/IUser";
+import { Button } from "./Button";
+import { ToastContainer, toast } from 'react-toastify';
+import { debounce } from "ts-debounce";
+import * as _ from "lodash";
 
 interface IAppState {
-  users: Object[],
+  user: IUser,
   searchTerm: string,
-  willAddUser: boolean
+  showUser: boolean
 }
 
 export class App extends React.Component<{}, IAppState>  {
@@ -16,48 +21,67 @@ export class App extends React.Component<{}, IAppState>  {
     super({});
 
     this.state = {
-      users: [],
+      user: {} as IUser,
       searchTerm: '',
-      willAddUser: false
+      showUser: false
     }
   }
 
   onSearchChange = (e: React.ChangeEvent<any>) : void => {
-    this.setState({ searchTerm: e.currentTarget.value });
+    if(e.currentTarget.value.length > 0) 
+      this.setState({ searchTerm: e.currentTarget.value});
   }
 
-  onAddUser = (e: React.MouseEvent<HTMLButtonElement>) : void => {
-    this.setState({ willAddUser: true });
+  onSearchClick = () => {
+    const { searchTerm } = this.state;
+    if(searchTerm.length) {
+      fetch('/api/user/id/' + searchTerm, {
+        method: 'GET'
+      })
+      .then(res => {
+        if(res.ok) return res.json();
+        return false;
+      })
+      .then(data => {
+        if(data)
+          this.setState({ user: data, showUser: true });
+        else
+          toast.error('We couldn\'t find that user :(');
+      });
+    }
   }
 
-  displayUserForm = () => {
-    if(!this.state.willAddUser)
-      return <Button className='f6 dim br3 ba bw2 ph3 pv2 mb2 dib dark-green' text='Create User' onClick={e => this.onAddUser(e)} />
-    else
-      return (
-        <div className='ma3'>
-          <UserForm />
-        </div>
-      );
+  dismissUserCard = (): void => {
+    this.setState({ showUser: false });
   }
 
-  componentDidMount() {
-    fetch('api/user/id/9308255116087')
-    .then(data => {
-      return data.json();
-    })
-    .then(data => console.log(data));
+  showFoundUser = (): JSX.Element => {
+    if(!this.state.showUser)
+      return <UserForm />;
+    return (
+      <div>
+        <UserCard user={this.state.user} />
+        <Button text='Close' className='btn btn-danger' onClick={e => this.dismissUserCard()}/>
+      </div>
+    );
   }
 
   render() {
+    console.log(this.state.user);
     return (
-      <div className='tc'>
-        <h1>TypeScript and React User I/O</h1>
-        <div>
-          <Input onInputChange={e => this.onSearchChange(e)} />
+      <div className='container-fluid'>
+        <ToastContainer />
+        <div className='text-center p-5'>
+          <h1 className='mb-5 border-bottom border-primary'>TypeScript and React User I/O</h1>
+          <div className='row'>
+            <div className='col'/>
+            <Input className='form-control col-6' placeholder='Search users by ID number' onInputChange={e => this.onSearchChange(e)} />
+            <Button className='btn btn-info col-2 ml-2' text='Search' onClick={e => this.onSearchClick()}/>
+            <div className='col'/>
+          </div>
         </div>
-        <div className='ma3'>
-          <UserForm />
+        <div className='w-50 m-auto'>
+          {this.showFoundUser()}
         </div>
       </div>
     );
