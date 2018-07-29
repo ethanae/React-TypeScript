@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-const path = require('path');
+import * as path from 'path';
+require('dotenv').config();
 
 import UserService from "./services/UserService";
 
@@ -28,7 +29,7 @@ class Server {
       if(result[0])
         res.status(201).json(result[1]);
       else
-        res.status(400).json(result[1]);
+        res.sendStatus(400);
     });
 
     router.get('/api/user/id/:idNumber', async (req, res) => {
@@ -44,7 +45,7 @@ class Server {
       if(!user)
         res.status(404).json(`User with ID number ${req.params.idNumber} not found`);
       else
-        res.status(202).json(user);
+        res.sendStatus(202);
     });
 
     this.express.use(router);

@@ -12,5 +12,5 @@ export const UserSchema: Schema = new Schema({
   address: String
 });
 
-connect('');
+connect(process.env.DB_CONN_STRING);
 export const User: Model<UserEntity> = model<UserEntity>('User', UserSchema);

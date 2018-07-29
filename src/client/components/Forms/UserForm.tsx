@@ -151,7 +151,9 @@ const Formik = withFormik({
     idNumber: '', 
     firstName: '', 
     lastName: '',
-    email: ''
+    email: '',
+    tel: '',
+    address: '',
   }),
   validationSchema: Yup.object().shape({
     idNumber: Yup.string().required('ID number required').matches(/[0-9]{13}$/, 'ID number must be 13 numeric characters'),
@@ -160,7 +162,11 @@ const Formik = withFormik({
     email: Yup.string().email('Invalid email').required('Email required')
   }),
   handleSubmit: (values, { setSubmitting }) => {
-    console.log(JSON.stringify(values, null, 2));
+    console.log(JSON.stringify(values));
+    fetch('/api/user', {
+      method: 'POST',
+      body: JSON.stringify(values)
+    })
   },
   displayName: 'Create User', 
 })(InnerUserForm);
