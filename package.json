@@ -7,7 +7,7 @@
     "client": "webpack-dev-server",
     "server": "gulp watch",
     "prod": "cross-env NODE_ENV=production webpack -p && gulp scripts && node ./private/index.js",
-    "dev": "concurrently --kill-others \"npm run client\" \"npm run server\"",
+    "dev": "cross-env NODE_ENV=development concurrently --kill-others \"npm run client\" \"npm run server\"",
     "test": "mocha --timeout 10000 --reporter spec --compilers ts:ts-node/register --recursive src/server"
   },
   "repository": {
