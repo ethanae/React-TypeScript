@@ -1,4 +1,4 @@
-# reactTypeScriptUserIO
+# React & TypeScript User CRUD
 
 ## React, TypeScript, MongoDB, Express
 
@@ -18,5 +18,5 @@
 ### Run the client and server in production
 `npm run prod`
 
-##Tests
+### Tests
 `npm test`
