@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client": "webpack-dev-server",
+    "client": "webpack-dev-server --mode development",
     "server": "gulp watch",
     "prod": "cross-env NODE_ENV=production webpack -p && gulp scripts && node ./private/index.js",
     "dev": "cross-env NODE_ENV=development concurrently --kill-others \"npm run client\" \"npm run server\"",
