@@ -18,4 +18,4 @@ try {
 } catch (error) {
   console.log(error);
 }
-export const User: Model<UserEntity> = model<UserEntity>('User', UserSchema);
+export const User: Model<UserEntity> = model<UserEntity>('User', UserSchema, process.env.COLL_NAME);
