@@ -15,7 +15,7 @@ interface IAppState {
 }
 
 export class App extends React.Component<{}, IAppState>  {
-  constructor() {
+  constructor({}) {
     super({});
 
     this.state = {
@@ -53,19 +53,7 @@ export class App extends React.Component<{}, IAppState>  {
     this.setState({ showUser: false });
   }
 
-  showFoundUser = (): JSX.Element => {
-    if(!this.state.showUser)
-      return <UserForm />;
-    return (
-      <div>
-        <UserCard user={this.state.user} />
-        <Button text='Back' className='btn btn-danger' onClick={e => this.dismissUserCard()} />
-      </div>
-    );
-  }
-
   render() {
-    console.log(this.state.user);
     return (
       <div className='container-fluid mb-5'>
         <ToastContainer />
@@ -79,7 +67,16 @@ export class App extends React.Component<{}, IAppState>  {
           </div>
         </div>
         <div className='w-50 m-auto'>
-          {this.showFoundUser()}
+          {
+            !this.state.showUser ?
+              <UserForm /> :
+              (
+                <div>
+                  <UserCard user={this.state.user} />
+                  <Button text='Back' className='btn btn-danger' onClick={e => this.dismissUserCard()} />
+                </div>
+              )
+          }
         </div>
       </div>
     );
