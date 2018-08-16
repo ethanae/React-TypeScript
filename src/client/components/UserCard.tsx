@@ -1,6 +1,5 @@
 import * as React from "react";
 import { IUser } from "../interfaces/IUser";
-import { userInfo } from "os";
 
 export interface ICardProps {
   user: IUser
