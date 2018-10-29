@@ -58,6 +58,7 @@
     "concurrently": "^3.6.1",
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
+    "file-loader": "^2.0.0",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",
     "gulp-typescript": "^4.0.2",

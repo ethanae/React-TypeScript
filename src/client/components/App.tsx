@@ -1,12 +1,18 @@
 import * as React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import 'react-toastify/dist/ReactToastify.css';
+
 import { Input } from "./Input";
 import { UserForm } from "./Forms/UserForm";
 import { UserCard } from "./UserCard";
 import { IUser } from "../interfaces/IUser";
 import { Button } from "./Button";
 import { ToastContainer, toast } from 'react-toastify';
+
+const reactImg = require('../assets/react-logo.png');
+const nodeImg = require('../assets/nodejs-logo.png');
+const mongoImg = require('../assets/mongo-logo.png');
+const tsImg = require('../assets/ts-logo.png');
 
 interface IAppState {
   user: IUser,
@@ -58,7 +64,7 @@ export class App extends React.Component<{}, IAppState>  {
       <div className='container-fluid mb-5'>
         <ToastContainer />
         <div className='text-center p-5'>
-          <h1 className='mb-5 border-bottom border-primary'>TypeScript and React User I/O</h1>
+          <h1 className='mb-5 border-bottom border-primary'>User Create and Lookup</h1>
           <div className='row'>
             <div className='col'/>
             <Input className='form-control col-6' placeholder='Search users by ID number' onInputChange={e => this.onSearchChange(e)} />
@@ -66,7 +72,7 @@ export class App extends React.Component<{}, IAppState>  {
             <div className='col'/>
           </div>
         </div>
-        <div className='w-50 m-auto'>
+        <div className='w-50 m-auto pb-3 border-bottom border-primary'>
           {
             !this.state.showUser ?
               <UserForm /> :
@@ -77,6 +83,17 @@ export class App extends React.Component<{}, IAppState>  {
                 </div>
               )
           }
+        </div>
+        <div className="row">
+          <div className="col-lg-12 text-center pt-3">Made with:</div>
+        </div>
+        <div className="row">
+          <div className="col-lg-12 text-center">
+            <img className="rounded-circle p-1 m-1 border border-primary" src={reactImg} alt="" width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1 border border-primary" src={tsImg} alt="" width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1 border border-success" src={nodeImg} alt="" width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1 border border-success" src={mongoImg} alt="" width="50" height="50"/>
+          </div>
         </div>
       </div>
     );
