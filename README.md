@@ -5,7 +5,7 @@
 # Setup
 ### Note: you need to include a .env file in your project root with a valid MongoDB connection string and a collection name.
 
-###.env
+### .env
 ```
 DB_CONN_STRING=<your_mongodb_connection>
 COLL_NAME=<your_collection_name>
