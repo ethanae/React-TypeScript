@@ -1,4 +1,4 @@
-# React & TypeScript User CRUD
+# A small React and TypeScript-based application demonstrating their integration as well as integration with MongoDB through Mongoose.
 
 ## React, TypeScript, Mongoose, Express
 
