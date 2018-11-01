@@ -13,16 +13,18 @@ COLL_NAME=<your_collection_name>
 
 `npm install`
 
-### To run the web client
+###### The front-end will be served from `localhost:8080`, Webpack will proxy API requests to `localhost:3000` where the NodeJS back-end is running.
+
+### To run the front-end
 `npm run client`
 
 ### To the run server
 `npm run server`
 
-### Run the client and server in development
+### Run both client and server in development
 `npm run dev`
 
-### Run the client and server in production
+### Run both client and server in production
 `npm run prod`
 
 ### Tests
