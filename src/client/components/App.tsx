@@ -79,7 +79,7 @@ export class App extends React.Component<{}, IAppState>  {
               (
                 <div>
                   <UserCard user={this.state.user} />
-                  <Button text='Back' className='btn btn-danger' onClick={e => this.dismissUserCard()} />
+                  <Button text='Close' className='btn btn-danger mt-2 col-12' onClick={e => this.dismissUserCard()} />
                 </div>
               )
           }
