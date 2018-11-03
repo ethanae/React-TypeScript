@@ -7,16 +7,18 @@ import { UserCard } from "./UserCard";
 import { IUser } from "../interfaces/IUser";
 import { ToastContainer, toast } from 'react-toastify';
 import SearchInput from './SearchInput';
+import UserList from './UserList';
 
 const reactImg = require('../assets/react-logo.png');
 const nodeImg = require('../assets/nodejs-logo.png');
 const mongoImg = require('../assets/mongo-logo.png');
 const tsImg = require('../assets/ts-logo.png');
 
-interface IAppState {
-  user: IUser,
+export interface IAppState {
+  activeUser: IUser,
   searchTerm: string,
-  showUser: boolean
+  showUser: boolean,
+  users: IUser[]
 }
 
 export class App extends React.Component<{}, IAppState>  {
@@ -24,10 +26,25 @@ export class App extends React.Component<{}, IAppState>  {
     super({});
 
     this.state = {
-      user: {} as IUser,
+      activeUser: {} as IUser,
       searchTerm: '',
-      showUser: false
+      showUser: false,
+      users: []
     }
+  }
+
+  componentDidMount() {
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ users: data });
+      })
+      .catch(err => toast.error('There was trouble finding users'));
+  }
+
+  onUserView(userIdNumber: string) {
+    const user = this.state.users.find(u => u.idNumber === userIdNumber);
+    this.setState({ activeUser: user, showUser: true });
   }
 
   onSearchChange = (e: React.ChangeEvent<any>) : void => {
@@ -38,7 +55,7 @@ export class App extends React.Component<{}, IAppState>  {
   onSearchClick = () => {
     const { searchTerm } = this.state;
     if(searchTerm.length) {
-      fetch(`/api/user/id/${searchTerm}`, {
+      fetch(`/api/activeUser/id/${searchTerm}`, {
         method: 'GET'
       })
       .then(res => {
@@ -47,7 +64,7 @@ export class App extends React.Component<{}, IAppState>  {
       })
       .then(data => {
         if(data)
-          this.setState({ user: data, showUser: true });
+          this.setState({ activeUser: data, showUser: true });
         else
           toast.error('User not found');
       });
@@ -75,18 +92,19 @@ export class App extends React.Component<{}, IAppState>  {
         </div>
         <div className='w-50 m-auto pb-3 border-bottom border-primary'>
           {
-            !this.state.showUser ?
-              <UserForm /> :
-              (
-                <div>
-                  <UserCard user={this.state.user} />
-                  <button className='btn btn-danger mt-2 col-12' onClick={_ => this.dismissUserCard()}>
-                    Close
-                  </button>
-                </div>
-              )
+            this.state.showUser ? 
+              <div>
+              <UserCard user={this.state.activeUser} />
+              <button className='btn btn-danger mt-2 col-12' onClick={_ => this.dismissUserCard()}>
+                Close
+              </button>
+            </div>
+            :
+            <UserList users={this.state.users} onUserClick={e => this.onUserView(e)} />
           }
+          
         </div>
+
         <div className="row">
           <div className="col-lg-12 text-center pt-3">Made with:</div>
         </div>
