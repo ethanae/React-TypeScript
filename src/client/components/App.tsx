@@ -13,6 +13,7 @@ const reactImg = require('../assets/react-logo.png');
 const nodeImg = require('../assets/nodejs-logo.png');
 const mongoImg = require('../assets/mongo-logo.png');
 const tsImg = require('../assets/ts-logo.png');
+const bootstrapImg = require('../assets/bootstrap-logo.png');
 
 export interface IAppState {
   activeUser: IUser,
@@ -55,7 +56,7 @@ export class App extends React.Component<{}, IAppState>  {
   onSearchClick = () => {
     const { searchTerm } = this.state;
     if(searchTerm.length) {
-      fetch(`/api/activeUser/id/${searchTerm}`, {
+      fetch(`/api/user/id/${searchTerm}`, {
         method: 'GET'
       })
       .then(res => {
@@ -100,7 +101,10 @@ export class App extends React.Component<{}, IAppState>  {
               </button>
             </div>
             :
-            <UserList users={this.state.users} onUserClick={e => this.onUserView(e)} />
+            <div>
+              <h2>Users</h2>
+              <UserList users={this.state.users} onUserClick={e => this.onUserView(e)} />
+            </div>
           }
           
         </div>
@@ -110,10 +114,11 @@ export class App extends React.Component<{}, IAppState>  {
         </div>
         <div className="row">
           <div className="col-lg-12 text-center">
-            <img className="rounded-circle p-1 m-1 border border-primary" src={reactImg} alt="" width="50" height="50"/>
-            <img className="rounded-circle p-1 m-1 border border-primary" src={tsImg} alt="" width="50" height="50"/>
-            <img className="rounded-circle p-1 m-1 border border-success" src={nodeImg} alt="" width="50" height="50"/>
-            <img className="rounded-circle p-1 m-1 border border-success" src={mongoImg} alt="" width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1" style={{ border: '1px solid #00d8ff'}} src={reactImg} width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1 border border-primary" src={tsImg} width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1 border border-success" src={nodeImg} width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1 border border-success" src={mongoImg} width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1" style={{ border: '1px solid #563d7c' }} src={bootstrapImg} width="50" height="50"/>
           </div>
         </div>
       </div>
