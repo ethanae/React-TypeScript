@@ -2,12 +2,11 @@ import * as React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Input } from "./Input";
 import { UserForm } from "./Forms/UserForm";
 import { UserCard } from "./UserCard";
 import { IUser } from "../interfaces/IUser";
-import { Button } from "./Button";
 import { ToastContainer, toast } from 'react-toastify';
+import SearchInput from './SearchInput';
 
 const reactImg = require('../assets/react-logo.png');
 const nodeImg = require('../assets/nodejs-logo.png');
@@ -50,7 +49,7 @@ export class App extends React.Component<{}, IAppState>  {
         if(data)
           this.setState({ user: data, showUser: true });
         else
-          toast.error('We couldn\'t find that user :(');
+          toast.error('User not found');
       });
     }
   }
@@ -64,12 +63,14 @@ export class App extends React.Component<{}, IAppState>  {
       <div className='container-fluid mb-5'>
         <ToastContainer />
         <div className='text-center p-5'>
-          <h1 className='mb-5 border-bottom border-primary'>User Create and Lookup</h1>
-          <div className='row'>
-            <div className='col'/>
-            <Input className='form-control col-6' placeholder='Search users by ID number' onInputChange={e => this.onSearchChange(e)} />
-            <Button className='btn btn-info col-2 ml-2' text='Search' onClick={e => this.onSearchClick()}/>
-            <div className='col'/>
+          <h1 className='mb-5 border-bottom border-primary'>React, TypeScript, and MongoDB</h1>
+          <div className='w-75 m-auto'>
+            <SearchInput 
+              className='form-control'
+              placeholder='Search users by ID number'
+              onSearchChange={e => this.onSearchChange(e)}
+              onSearchTrigger={_ => this.onSearchClick()}
+            />
           </div>
         </div>
         <div className='w-50 m-auto pb-3 border-bottom border-primary'>
@@ -79,7 +80,9 @@ export class App extends React.Component<{}, IAppState>  {
               (
                 <div>
                   <UserCard user={this.state.user} />
-                  <Button text='Close' className='btn btn-danger mt-2 col-12' onClick={e => this.dismissUserCard()} />
+                  <button className='btn btn-danger mt-2 col-12' onClick={_ => this.dismissUserCard()}>
+                    Close
+                  </button>
                 </div>
               )
           }
