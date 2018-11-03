@@ -1,8 +1,9 @@
 import UserRepository from "../data/UserRepository";
 import { UserEntity } from "../data/schemas/User";
+import { IUser } from '../common/interfaces/IUser';
 
 class UserService {
-  public async getUserByIdNumber(idNumber: string): Promise<UserEntity> {
+  async getUserByIdNumber(idNumber: string): Promise<UserEntity> {
     try {
       return await UserRepository.getUserByIdNumber(idNumber);
     } catch (error) {
@@ -10,7 +11,7 @@ class UserService {
     }
   }
 
-  public async createUser(user: object): Promise<[boolean, string]> {
+  async createUser(user: object): Promise<[boolean, string]> {
     try {
       const newUser = <UserEntity>user;
       if(await UserRepository.insertUser(newUser))
@@ -21,11 +22,26 @@ class UserService {
     }
   }
 
-  public async deleteUserByIdNumber(idNumber: string): Promise<boolean> {
+  async deleteUserByIdNumber(idNumber: string): Promise<boolean> {
     try {
       return await UserRepository.deleteUserByIdNumber(idNumber);
     } catch (error) {
       return false;
+    }
+  }
+
+  async getUsers(): Promise<IUser[]> {
+    try {
+      const users = await UserRepository.getUsers();
+      return users.map(user => {
+        user = user.toObject();
+        delete user._id;
+        delete user.__v;
+        return user;
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 }

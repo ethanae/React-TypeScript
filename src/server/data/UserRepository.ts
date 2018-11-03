@@ -2,7 +2,7 @@ import { User, UserEntity } from "../data/schemas/User";
 
 class UserRepository {
   
-  public async getUserByIdNumber(idNumber: string): Promise<UserEntity> {
+  async getUserByIdNumber(idNumber: string): Promise<UserEntity> {
     try {
       return await User.findOne({ idNumber: idNumber });
     } catch (error) {
@@ -11,7 +11,7 @@ class UserRepository {
     }
   }
 
-  public async insertUser(user: UserEntity): Promise<boolean> {
+  async insertUser(user: UserEntity): Promise<boolean> {
     try {
       return !!(await User.create(user));
     } catch (error) {
@@ -21,11 +21,20 @@ class UserRepository {
     }
   }
 
-  public async deleteUserByIdNumber(idNumber: string): Promise<boolean> {
+  async deleteUserByIdNumber(idNumber: string): Promise<boolean> {
     try {
       return !!(await User.deleteOne({ idNumber: idNumber }));
     } catch (error) {
       return false;
+    }
+  }
+
+  async getUsers(): Promise<UserEntity[]> {
+    try {
+      return await User.find();
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 }

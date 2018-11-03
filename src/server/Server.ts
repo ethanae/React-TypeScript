@@ -23,6 +23,15 @@ class Server {
   private routes(): void {
     let router = express.Router();
 
+    router.get('/api/users', async (req, res) => {
+      try {
+        const users = await UserService.getUsers();
+        return res.status(200).json(users);
+      } catch (error) {
+        res.status(500).json("Couldn't get users from server");
+      }
+    });
+
     router.post('/api/user', async (req, res) => {
       const result = await UserService.createUser(req.body);
       if(result[0])
