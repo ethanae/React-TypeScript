@@ -3,11 +3,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import 'react-toastify/dist/ReactToastify.css';
 
 import { UserForm } from "./Forms/UserForm";
-import { UserCard } from "./UserCard";
 import { IUser } from "../interfaces/IUser";
 import { ToastContainer, toast } from 'react-toastify';
 import SearchInput from './SearchInput';
-import UserList from './UserList';
+import UserCardOrUserList from './UserCardOrUserList';
+import * as Spinner from 'react-spinkit';
 
 const reactImg = require('../assets/react-logo.png');
 const nodeImg = require('../assets/nodejs-logo.png');
@@ -16,10 +16,11 @@ const tsImg = require('../assets/ts-logo.png');
 const bootstrapImg = require('../assets/bootstrap-logo.png');
 
 export interface IAppState {
-  activeUser: IUser,
-  searchTerm: string,
-  showUser: boolean,
-  users: IUser[]
+  activeUser: IUser;
+  searchTerm: string;
+  showUser: boolean;
+  users: IUser[];
+  loadingUsers: boolean;
 }
 
 export class App extends React.Component<{}, IAppState>  {
@@ -30,15 +31,16 @@ export class App extends React.Component<{}, IAppState>  {
       activeUser: {} as IUser,
       searchTerm: '',
       showUser: false,
-      users: []
-    }
+      users: [],
+      loadingUsers: true
+    };
   }
 
   componentDidMount() {
     fetch('/api/users')
       .then(res => res.json())
       .then(data => {
-        this.setState({ users: data });
+        this.setState({ users: data, loadingUsers: false });
       })
       .catch(err => toast.error('There was trouble finding users'));
   }
@@ -72,7 +74,7 @@ export class App extends React.Component<{}, IAppState>  {
     }
   }
 
-  dismissUserCard = (): void => {
+  onCloseUserCard = (): void => {
     this.setState({ showUser: false });
   }
 
@@ -93,20 +95,19 @@ export class App extends React.Component<{}, IAppState>  {
         </div>
         <div className='w-50 m-auto pb-3 border-bottom border-primary'>
           {
-            this.state.showUser ? 
-              <div>
-              <UserCard user={this.state.activeUser} />
-              <button className='btn btn-danger mt-2 col-12' onClick={_ => this.dismissUserCard()}>
-                Close
-              </button>
-            </div>
-            :
-            <div>
-              <h2>Users</h2>
-              <UserList users={this.state.users} onUserClick={e => this.onUserView(e)} />
-            </div>
-          }
-          
+            this.state.loadingUsers ?
+              <div className="d-flex justify-content-center align-content-center p-5">
+                <Spinner className="" name="ball-clip-rotate-multiple" color="#00d8ff" fadeIn='none' />
+              </div>
+              :
+              <UserCardOrUserList 
+                showUserCard={this.state.showUser}
+                activeUser={this.state.activeUser}
+                onUserClose={this.onCloseUserCard}
+                users={this.state.users}
+                onUserClick={id => this.onUserView(id)}
+              />  
+          }        
         </div>
 
         <div className="row">

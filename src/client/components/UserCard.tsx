@@ -5,7 +5,7 @@ export interface ICardProps {
   user: IUser
 }
 
-export const UserCard = (props: ICardProps) => {
+const UserCard = (props: ICardProps) => {
   return (
     <div className='card border shadow'>
      <div className="card-body">
@@ -32,3 +32,5 @@ export const UserCard = (props: ICardProps) => {
     </div>
   );
 }
+
+export default UserCard;
