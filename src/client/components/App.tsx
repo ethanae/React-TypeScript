@@ -115,11 +115,11 @@ export class App extends React.Component<{}, IAppState>  {
         </div>
         <div className="row">
           <div className="col-lg-12 text-center">
-            <img className="rounded-circle p-1 m-1" style={{ border: '1px solid #00d8ff'}} src={reactImg} width="50" height="50"/>
-            <img className="rounded-circle p-1 m-1 border border-primary" src={tsImg} width="50" height="50"/>
-            <img className="rounded-circle p-1 m-1 border border-success" src={nodeImg} width="50" height="50"/>
-            <img className="rounded-circle p-1 m-1 border border-success" src={mongoImg} width="50" height="50"/>
-            <img className="rounded-circle p-1 m-1" style={{ border: '1px solid #563d7c' }} src={bootstrapImg} width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1 border"src={reactImg} width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1 border" src={tsImg} width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1 border" src={nodeImg} width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1 border" src={mongoImg} width="50" height="50"/>
+            <img className="rounded-circle p-1 m-1 border" src={bootstrapImg} width="50" height="50"/>
           </div>
         </div>
       </div>
