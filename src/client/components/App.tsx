@@ -42,10 +42,10 @@ export class App extends React.Component<{}, IAppState>  {
       .then(data => {
         this.setState({ users: data, loadingUsers: false });
       })
-      .catch(err => toast.error('There was trouble finding users'));
+      .catch(_ => toast.error('There was trouble finding users'));
   }
 
-  onUserView(userIdNumber: string) {
+  onUserView = (userIdNumber: string) => {
     const user = this.state.users.find(u => u.idNumber === userIdNumber);
     this.setState({ activeUser: user, showUser: true });
   }
@@ -58,7 +58,7 @@ export class App extends React.Component<{}, IAppState>  {
   onSearchClick = () => {
     const { searchTerm } = this.state;
     if(searchTerm.length) {
-      fetch(`/api/user/id/${searchTerm}`, {
+      fetch(`/api/user/${searchTerm}`, {
         method: 'GET'
       })
       .then(res => {
@@ -71,6 +71,23 @@ export class App extends React.Component<{}, IAppState>  {
         else
           toast.error('User not found');
       });
+    }
+  }
+
+  //demonstrating async/await
+  onDeleteUser = async (userIdNumber: string): Promise<void> => {
+    try {
+      const result = await fetch('/api/user/' + userIdNumber, {
+        method: 'DELETE'
+      });
+      if(result.ok) {
+        const reducedUsers = this.state.users.filter(u => u.idNumber !== userIdNumber);
+        this.setState({ users: reducedUsers });
+      } else {
+        toast.error('Couldn\'t delete that user');
+      }
+    } catch (error) {
+      toast.error('Trouble encountered deleting that user');
     }
   }
 
@@ -106,6 +123,7 @@ export class App extends React.Component<{}, IAppState>  {
                 onUserClose={this.onCloseUserCard}
                 users={this.state.users}
                 onUserClick={id => this.onUserView(id)}
+                onUserDelete={id => this.onDeleteUser(id)}
               />  
           }        
         </div>

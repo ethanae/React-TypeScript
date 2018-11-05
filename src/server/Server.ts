@@ -40,7 +40,7 @@ class Server {
         res.sendStatus(400);
     });
 
-    router.get('/api/user/id/:idNumber', async (req, res) => {
+    router.get('/api/user/:idNumber', async (req, res) => {
       let user = await UserService.getUserByIdNumber(req.params.idNumber);
       if(!user)
         res.status(404).json(`User with ID number ${req.params.idNumber} not found`);
@@ -48,7 +48,7 @@ class Server {
         res.status(200).json(user);
     });
 
-    router.delete('/api/user/id/:idNumber', async (req, res) => {
+    router.delete('/api/user/:idNumber', async (req, res) => {
       let user = await UserService.deleteUserByIdNumber(req.params.idNumber);
       if(!user)
         res.status(404).json(`User with ID number ${req.params.idNumber} not found`);

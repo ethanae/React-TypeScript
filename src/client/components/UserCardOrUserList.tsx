@@ -3,6 +3,8 @@ import * as React from 'react';
 import UserList from './UserList';
 import UserCard from './UserCard';
 import { IUser } from '../interfaces/IUser';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export interface IUserCardOrUserListProps {
   showUserCard: boolean;
@@ -10,6 +12,7 @@ export interface IUserCardOrUserListProps {
   onUserClose(): void;
   users: IUser[];
   onUserClick(userId: string): void;
+  onUserDelete(userId: string): void;
 }
 
 const UserCardOrUserList = (props: IUserCardOrUserListProps) => {
@@ -23,8 +26,13 @@ const UserCardOrUserList = (props: IUserCardOrUserListProps) => {
     </div>
     :
     <div>
-      <h2>Users</h2>
-      <UserList users={props.users} onUserClick={id => props.onUserClick(id)} />
+      <div className="">
+        <button className="btn btn-sm btn-primary float-right" >
+            <FontAwesomeIcon icon={faPlus} />
+        </button>
+        <h2>Users</h2>
+      </div>
+      <UserList users={props.users} onUserClick={id => props.onUserClick(id)} onUserDelete={id => props.onUserDelete(id)} />
     </div>
   )
 }
