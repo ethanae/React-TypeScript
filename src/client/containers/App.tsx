@@ -2,11 +2,10 @@ import * as React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import 'react-toastify/dist/ReactToastify.css';
 
-import { UserForm } from "../components/Forms/UserForm";
 import { IUser } from "../interfaces/IUser";
 import { ToastContainer, toast } from 'react-toastify';
 import SearchInput from '../components/SearchInput';
-import UserCardOrUserList from '../components/UserCardOrUserList';
+import UsersSection from '../components/UsersSection';
 import * as Spinner from 'react-spinkit';
 
 const reactImg = require('../assets/react-logo.png');
@@ -45,11 +44,6 @@ export class App extends React.Component<{}, IAppState>  {
       .catch(_ => toast.error('There was trouble finding users'));
   }
 
-  onUserView = (userIdNumber: string) => {
-    const user = this.state.users.find(u => u.idNumber === userIdNumber);
-    this.setState({ activeUser: user, showUser: true });
-  }
-
   onSearchChange = (e: React.ChangeEvent<any>) : void => {
     if(e.currentTarget.value.length > 0) 
       this.setState({ searchTerm: e.currentTarget.value});
@@ -80,6 +74,7 @@ export class App extends React.Component<{}, IAppState>  {
       const result = await fetch('/api/user/' + userIdNumber, {
         method: 'DELETE'
       });
+
       if(result.ok) {
         const reducedUsers = this.state.users.filter(u => u.idNumber !== userIdNumber);
         this.setState({ users: reducedUsers });
@@ -89,10 +84,6 @@ export class App extends React.Component<{}, IAppState>  {
     } catch (error) {
       toast.error('Trouble encountered deleting that user');
     }
-  }
-
-  onCloseUserCard = (): void => {
-    this.setState({ showUser: false });
   }
 
   render() {
@@ -117,12 +108,9 @@ export class App extends React.Component<{}, IAppState>  {
                 <Spinner className="" name="ball-clip-rotate-multiple" color="#00d8ff" fadeIn='none' />
               </div>
               :
-              <UserCardOrUserList 
-                showUserCard={this.state.showUser}
+              <UsersSection 
                 activeUser={this.state.activeUser}
-                onUserClose={this.onCloseUserCard}
                 users={this.state.users}
-                onUserClick={id => this.onUserView(id)}
                 onUserDelete={id => this.onDeleteUser(id)}
               />  
           }        
