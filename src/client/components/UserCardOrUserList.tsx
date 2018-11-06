@@ -18,22 +18,20 @@ export interface IUserCardOrUserListProps {
 const UserCardOrUserList = (props: IUserCardOrUserListProps) => {
   return (
     props.showUserCard ? 
-    <div>
-      <UserCard user={props.activeUser} />
-      <button className='btn btn-danger mt-2 col-12' onClick={_ => props.onUserClose()}>
-        Close
-      </button>
-    </div>
-    :
-    <div>
-      <div className="">
-        <button className="btn btn-sm btn-primary float-right" >
-            <FontAwesomeIcon icon={faPlus} />
+      <div>
+        <UserCard user={props.activeUser} />
+        <button className='btn btn-danger mt-2 col-12' onClick={_ => props.onUserClose()}>
+          Close
+        </button>
+      </div>
+      :
+      <div>
+        <button className="btn btn-sm btn-primary float-right">
+          <FontAwesomeIcon icon={faPlus} />
         </button>
         <h2>Users</h2>
+        <UserList users={props.users} onUserClick={id => props.onUserClick(id)} onUserDelete={id => props.onUserDelete(id)} />
       </div>
-      <UserList users={props.users} onUserClick={id => props.onUserClick(id)} onUserDelete={id => props.onUserDelete(id)} />
-    </div>
   )
 }
 

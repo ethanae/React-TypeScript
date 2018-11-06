@@ -2,11 +2,11 @@ import * as React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import 'react-toastify/dist/ReactToastify.css';
 
-import { UserForm } from "./Forms/UserForm";
+import { UserForm } from "../components/Forms/UserForm";
 import { IUser } from "../interfaces/IUser";
 import { ToastContainer, toast } from 'react-toastify';
-import SearchInput from './SearchInput';
-import UserCardOrUserList from './UserCardOrUserList';
+import SearchInput from '../components/SearchInput';
+import UserCardOrUserList from '../components/UserCardOrUserList';
 import * as Spinner from 'react-spinkit';
 
 const reactImg = require('../assets/react-logo.png');
