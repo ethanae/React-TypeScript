@@ -1,17 +1,17 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./src/client/index.tsx",
+  entry: './src/client/index.tsx',
   output: {
-    filename: "bundle.js",
-    path: __dirname + "/public/"
+    filename: 'bundle.js',
+    path: __dirname + '/public/'
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".json"]
+    extensions: ['.ts', '.tsx', '.js', '.json']
   },
   devServer: {
     proxy: {
-      "*": "http://127.0.0.1:3000"
+      '*': 'http://127.0.0.1:3000'
     },
     open: 'Google Chrome'
   },
@@ -20,20 +20,20 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: "awesome-typescript-loader"
+        loader: 'awesome-typescript-loader'
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       },
       {
         test: /\.css$/,
         use: [
-          { loader: "style-loader" },
-          { loader: "css-loader" }
+          { loader: 'style-loader' },
+          { loader: 'css-loader' }
         ]
       },
       {
@@ -49,7 +49,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/client/index.html"
+      template: './src/client/index.html'
     })
   ]
 }
