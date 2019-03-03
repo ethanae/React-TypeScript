@@ -32,7 +32,7 @@ class Server {
       }
     });
 
-    router.post('/api/user', async (req, res) => {
+    router.post('/api/users', async (req, res) => {
       const result = await UserService.createUser(req.body);
       if(result[0])
         res.status(201).json(result[1]);
@@ -40,15 +40,15 @@ class Server {
         res.sendStatus(400);
     });
 
-    router.get('/api/user/:idNumber', async (req, res) => {
-      let user = await UserService.getUserByIdNumber(req.params.idNumber);
+    router.get('/api/users/:idNumber', async (req, res) => {
+      let user = await UserService.findUsers({ idNumber: { $regex: req.params.idNumber, $options: 'i' } });
       if(!user)
-        res.status(404).json(`User with ID number ${req.params.idNumber} not found`);
+        res.status(404).json(`No users found for ${req.params.idNumber}`);
       else
         res.status(200).json(user);
     });
 
-    router.delete('/api/user/:idNumber', async (req, res) => {
+    router.delete('/api/users/:idNumber', async (req, res) => {
       let user = await UserService.deleteUserByIdNumber(req.params.idNumber);
       if(!user)
         res.status(404).json(`User with ID number ${req.params.idNumber} not found`);

@@ -167,7 +167,7 @@ const Formik = withFormik({
   }),
   handleSubmit: (values, { resetForm, setSubmitting }) => {
     toast.info('Creating User...');
-    fetch('/api/user', {
+    fetch('/api/users', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

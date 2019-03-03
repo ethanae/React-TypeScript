@@ -11,6 +11,15 @@ class UserRepository {
     }
   }
 
+  async findUsers(query: object): Promise<Array<UserEntity>> {
+    const users = await User.find(query).catch(err => {
+      console.log(err);
+      throw err;
+    });
+
+    return users;
+  }
+
   async insertUser(user: UserEntity): Promise<boolean> {
     try {
       return !!(await User.create(user));

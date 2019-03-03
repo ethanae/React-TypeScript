@@ -11,6 +11,13 @@ class UserService {
     }
   }
 
+  async findUsers(query: object): Promise<Array<UserEntity>> {
+    return await UserRepository.findUsers(query).catch(err => {
+      console.log('error in user service => findUsers', err);
+      throw err;
+    });
+  }
+
   async createUser(user: object): Promise<[boolean, string]> {
     try {
       const newUser = <UserEntity>user;

@@ -45,14 +45,13 @@ export class App extends React.Component<{}, IAppState>  {
   }
 
   onSearchChange = (e: React.ChangeEvent<any>) : void => {
-    if(e.currentTarget.value.length > 0) 
-      this.setState({ searchTerm: e.currentTarget.value});
+    this.setState({ searchTerm: e.currentTarget.value});
   }
 
   onSearchClick = () => {
     const { searchTerm } = this.state;
     if(searchTerm.length) {
-      fetch(`/api/user/${searchTerm}`, {
+      fetch(`/api/users/${searchTerm}`, {
         method: 'GET'
       })
       .then(res => {
@@ -60,10 +59,11 @@ export class App extends React.Component<{}, IAppState>  {
         return false;
       })
       .then(data => {
-        if(data)
-          this.setState({ activeUser: data, showUser: true });
+        if(data.length)
+          this.setState({ users: data, showUser: false });
         else
-          toast.error('User not found');
+          toast.error('No users found');
+        console.log(this.state);
       });
     }
   }
@@ -71,7 +71,7 @@ export class App extends React.Component<{}, IAppState>  {
   //demonstrating async/await
   onDeleteUser = async (userIdNumber: string): Promise<void> => {
     try {
-      const result = await fetch('/api/user/' + userIdNumber, {
+      const result = await fetch('/api/users/' + userIdNumber, {
         method: 'DELETE'
       });
 
